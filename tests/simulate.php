@@ -12,8 +12,9 @@ $seconds  = intval($argv[3]);
 $user = new \stdClass;
 $user->id = $userId;
 
+//get lock for some resource: procude-154
 $lock = new Lock("{$resource}-{$user->id}");
-echo "Acquire lock for {$lock->getResourceName()}\n";
+echo "Got lock for {$lock->getResourceName()}\n";
 $lock->lock();
   echo "Sleep for $seconds seconds…\n";
   sleep($seconds);
