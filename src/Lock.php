@@ -11,7 +11,6 @@ class Lock
     protected $waitingTime  = 0;
     protected $filepath     = null;
 
-
     public function __construct ($resource, $delay = 5000)
     {
         if(empty($resource)) {
@@ -27,12 +26,14 @@ class Lock
         $this->filepath  = $this->filepath();
     }
 
+    //compute tmp filename for lock
     protected function filepath() {
         $file   = "proclock__{$this->resource}__proclock.lock";
         $tmpDir = sys_get_temp_dir(); 
         return $tmpDir . DIRECTORY_SEPARATOR . $file;
     }
 
+    //Get lock for resource
     public function lock()
     {
         if ($this->lock !== null)  {
@@ -57,6 +58,7 @@ class Lock
         return $this->lock;
     }
 
+    //Unlock resource
     public function unlock ()
     {
         if ($this->lock === null) {
@@ -68,18 +70,23 @@ class Lock
         $this->lock = null;
     }
 
+
+    //Get total time in secondes waiting for lock
     public function getWaitingTime ()
     {
         return round($this->waitingTime * 1000);
     }
 
+
+    //Get full resource name (procude-124)
     public function getResourceName() {
         return $this->resource;
     }
 
-    //relaese lock in case user forget to call release manualy
-    //please do not count on this method in production code
-    //always release locks manualy
+
+    //Relaese lock in case user forgot to call Lock::unlock manualy
+    //Please do not count on this method in production code always release 
+    //locks manualy with Lock::unlock method
     public function __destruct() {
       if($this->lock !== null) {
         $this->unlock();
