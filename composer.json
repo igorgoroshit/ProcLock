@@ -1,0 +1,26 @@
+{
+    "name":         "igorgoroshit/proclock",
+    "description":  "",
+    "keywords":     ["proclock"],
+    "type":         "library",
+    "license":      "",
+    "authors":      [
+        {
+            "name":     "Igor Goroshit",
+            "email":    "igor@webt.co.il"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.3"
+    },
+
+    "require-dev": {
+    },
+
+    "autoload": {
+        "psr-4": {
+          "Igorgoroshit\\ProcLock\\": "src"
+        }
+    }
+}
