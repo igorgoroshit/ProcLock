@@ -79,7 +79,7 @@ class Lock
 
     //relaese lock in case user forget to call release manualy
     //please do not count on this method in production code
-    //always release accouried locak manualy
+    //always release locks manualy
     public function __destruct() {
       if($this->lock !== null) {
         $this->unlock();
