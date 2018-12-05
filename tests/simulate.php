@@ -15,6 +15,7 @@ $user->id = $userId;
 //get lock for some resource: procude-154
 $lock = new Lock("{$resource}-{$user->id}");
 echo "Got lock for {$lock->getResourceName()}\n";
+echo "Path to lock file {$lock->getPathToLockFile()}\n";
 $lock->lock();
   echo "Sleep for $seconds seconds…\n";
   sleep($seconds);
