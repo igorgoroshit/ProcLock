@@ -10,15 +10,16 @@ class Lock
     protected $lock         = null;
     protected $waitingTime  = 0;
     protected $filepath     = null;
+    protected $minDelay     = 100000;
 
     public function __construct ($resource, $delay = 200000)
     {
         if(empty($resource)) {
-          throw new \BadMethodCallException('you must provide non empty resource name');
+          throw new \BadMethodCallException('You must provide a non empty resource name');
         }
 
-        if($delay < 200) {
-          throw new \BadMethodCallException('you must provide delay > 200 to to keep cpu from bieng overloaded');  
+        if($delay < $this->minDelay) {
+          throw new \BadMethodCallException("You must provide delay > {$this->minDelay} to keep load of CPU");  
         }
         
         $this->delay     = $delay;
@@ -41,7 +42,7 @@ class Lock
     public function lock()
     {
         if ($this->lock !== null)  {
-            throw new \BadMethodCallException('you cant acquire lock on non relased resource');
+            throw new \BadMethodCallException('You cannot acquire lock on unreleased resource');
         }
 
         $this->waitingTime = 0;
@@ -66,7 +67,7 @@ class Lock
     public function unlock ()
     {
         if ($this->lock === null) {
-            throw new \BadMethodCallException('You cant relase non accoured lock!');
+            throw new \BadMethodCallException("You can't release non acquire lock");
         }
 
         flock($this->lock, LOCK_UN);
