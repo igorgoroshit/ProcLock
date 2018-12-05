@@ -5,13 +5,13 @@ namespace Igorgoroshit\ProcLock;
 
 class Lock
 {
-    protected $delay        = 5000;
+    protected $delay        = 200000;
     protected $resource     = '';
     protected $lock         = null;
     protected $waitingTime  = 0;
     protected $filepath     = null;
 
-    public function __construct ($resource, $delay = 5000)
+    public function __construct ($resource, $delay = 200000)
     {
         if(empty($resource)) {
           throw new \BadMethodCallException('you must provide non empty resource name');
@@ -31,6 +31,10 @@ class Lock
         $file   = "proclock__{$this->resource}__proclock.lock";
         $tmpDir = sys_get_temp_dir(); 
         return $tmpDir . DIRECTORY_SEPARATOR . $file;
+    }
+
+    public function getPathToLockFile() {
+        return $this->filepath;
     }
 
     //Get lock for resource
@@ -67,6 +71,7 @@ class Lock
 
         flock($this->lock, LOCK_UN);
         fclose($this->lock);
+        unlink($this->filepath);
         $this->lock = null;
     }
 
