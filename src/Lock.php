@@ -47,7 +47,7 @@ class Lock
 
         $this->waitingTime = 0;
 
-        $this->lock = fopen($this->filepath, 'c+');
+        $this->lock = fopen($this->filepath, 'c');
       
         $sTime = microtime(true);
 
@@ -72,7 +72,7 @@ class Lock
 
         flock($this->lock, LOCK_UN);
         fclose($this->lock);
-        unlink($this->filepath);
+        @unlink($this->filepath);
         $this->lock = null;
     }
 
