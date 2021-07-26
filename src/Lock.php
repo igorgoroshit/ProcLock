@@ -72,7 +72,7 @@ class Lock
 
         flock($this->lock, LOCK_UN);
         fclose($this->lock);
-        @unlink($this->filepath);
+
         $this->lock = null;
     }
 
